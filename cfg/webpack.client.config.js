@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV;
 const IS_DEV = NODE_ENV === 'development';
+const GLOBAL_CSS_REGEXP = /\.global\.css$/;
 
 function setupDevtool() {
   switch (true) {
@@ -26,7 +27,7 @@ module.exports = {
     publicPath: '/static/'
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
     alias: {
       'react-dom': IS_DEV ? '@hot-loader/react-dom' : 'react-dom'
     }
@@ -50,7 +51,12 @@ module.exports = {
               }
             }
           }
-        ]
+        ],
+        exclude: GLOBAL_CSS_REGEXP
+      },
+      {
+        test: GLOBAL_CSS_REGEXP,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
