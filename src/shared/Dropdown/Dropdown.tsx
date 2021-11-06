@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { noop } from '../../utils/js/noop';
 import styles from './dropdown.css';
 

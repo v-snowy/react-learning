@@ -12,7 +12,7 @@ interface ICardInfoProps {
 }
 
 export function CardInfo(
-  {userName, avatarImgSrc, avatarImgAlt, postPublishedDate: publishedDate, postDescription }: ICardInfoProps
+  {userName, avatarImgSrc, avatarImgAlt, postPublishedDate, postDescription }: ICardInfoProps
 ) {
   return (
     <div className={ styles.textContent }>
@@ -25,7 +25,7 @@ export function CardInfo(
 
         <span className={ styles.createdAt }>
           <span className={ styles.publishedLabel }>published </span>
-          { publishedDate }
+          { postPublishedDate }
         </span>
       </div>
       <Title description={ postDescription }></Title>
