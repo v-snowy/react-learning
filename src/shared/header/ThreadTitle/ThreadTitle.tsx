@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './thread-title.css';
+import styles from './threadTitle.css';
 
 export function ThreadTitle() {
   return (

@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './header.css';
-import { SearchBlock } from './Search-block/Search-block';
-import { SortBlock } from './Sort-block/Sort-block';
-import { ThreadTitle } from './Thread-title/Thread-title';
+import { SearchBlock } from './SearchBlock/SearchBlock';
+import { SortBlock } from './SortBlock/SortBlock';
+import { ThreadTitle } from './ThreadTitle/ThreadTitle';
 
 export function Header() {
   return (

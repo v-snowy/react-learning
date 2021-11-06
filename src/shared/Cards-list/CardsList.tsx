@@ -1,11 +1,22 @@
 import React from 'react';
-import { Card } from './Card';
-import styles from './cards-list.css';
+import { Card, ICardProps } from './Card';
+import styles from './cardsList.css';
 
-export function CardsList() {
+export interface ICardsListProps {
+  list: ICardProps[];
+}
+
+export function CardsList({ list }: ICardsListProps) {
   return (
-    <ul className={ styles.cardsist }>
-      <Card></Card>
+    <ul className={ styles.cardsList }>
+      {
+        list.map(({ card }: ICardProps) => (
+          <Card
+            key={ card.id }
+            card={ card }
+          ></Card>
+        ))
+      }
     </ul>
   );
 }

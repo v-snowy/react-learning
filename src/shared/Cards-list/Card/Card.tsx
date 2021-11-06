@@ -1,34 +1,45 @@
 import React from 'react';
 import styles from './card.css';
+import { CardInfo } from './CardInfo';
 import { Controls } from './Controls';
 import { ImgPreview } from './ImgPreview';
 import { Menu } from './Menu';
-import { UserLink } from './UserLink';
 
-export function Card() {
+export interface ICardProps {
+  card: {
+    id: string,
+    user: {
+      name: string;
+      avatarImgSrc: string;
+      avatarImgAlt?: string;
+    },
+    publishedDate: string;
+    postDescription: string;
+    image: {
+      src: string;
+      alt?: string;
+    },
+    karmaValue: number;
+    commentsCount: number;
+  }
+}
+
+export function Card({ card: { image, karmaValue, user, publishedDate, postDescription, commentsCount } }: ICardProps) {
   return (
     <li className={ styles.card }>
-      <div className={ styles.textContent }>
-        <div className={ styles.metaData }>
-          <UserLink></UserLink>
+      <CardInfo
+        userName={ user.name }
+        avatarImgSrc={ user.avatarImgSrc }
+        avatarImgAlt={ user.avatarImgAlt }
+        postPublishedDate={ publishedDate }
+        postDescription={ postDescription }
+      ></CardInfo>
 
-          <span className={ styles.createdAt }>
-            <span className={ styles.publishedLabel }>published </span>
-            4 hours ago
-          </span>
-        </div>
-        <h2 className={ styles.title }>
-          <a className={ styles.postLink } href="#post-url">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil ipsum delectus accusantium! Recusandae, voluptas qui?
-          </a>
-        </h2>
-      </div>
-
-      <ImgPreview></ImgPreview>
+      <ImgPreview src={ image.src } alt={ image.alt }></ImgPreview>
 
       <Menu></Menu>
 
-      <Controls></Controls>
+      <Controls karmaValue={ karmaValue } commentsCount={ commentsCount }></Controls>
     </li>
   );
 }
