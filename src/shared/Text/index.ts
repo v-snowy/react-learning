@@ -1,2 +1,2 @@
 export * from './Text';
-export * from './colorsEnum';
+export * from './colorEnum';

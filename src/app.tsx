@@ -1,12 +1,10 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
-import { Layout } from './shared/Layout/Layout';
+import { Layout } from './shared/Layout';
 import './main.global.css';
-import { Header } from './shared/header/Header';
-import { Content } from './shared/Content/Content';
+import { Header } from './shared/Header';
+import { Content } from './shared/Content';
 import { CardsList, ICardsListProps } from './shared/cards-list';
-import { Dropdown } from './shared/Dropdown';
-import { GenericList } from './shared/GenericList';
 
 const cardsList: ICardsListProps = {
   list: [

@@ -1,4 +1,4 @@
-export enum EColors {
+export enum EColor {
   orange  = 'orange',
   black   = 'black',
   green   = 'green',

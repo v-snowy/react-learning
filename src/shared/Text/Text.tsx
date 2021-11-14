@@ -1,26 +1,35 @@
 import React from 'react';
-import { EColors } from '.';
+import { EColor } from '.';
 import styles from './text.css';
+import classNames from 'classnames';
 
 interface ITextProps {
-  size: number;
-  color: EColors;
-  children: string;
+  As?: 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'div';
+  children?: React.ReactNode;
+  size: TSizes;
+  mobileSize?: TSizes;
+  tabletSize?: TSizes;
+  desktopSize?: TSizes;
+  color?: EColor;
 }
 
-export function Text({ size, color, children }: ITextProps) {
+type  TSizes = 10 | 12 | 14 | 16 | 20 | 28;
+
+export function Text(props: ITextProps) {
+  const { As = 'span', color = EColor.black, children, size, mobileSize, tabletSize, desktopSize }: ITextProps = props;
+  const classes = classNames(
+    styles[`s${ size }`],
+    styles[color],
+    { [styles[`m${ mobileSize }`]]: mobileSize },
+    { [styles[`t${ tabletSize }`]]: tabletSize },
+    { [styles[`d${ desktopSize }`]]: desktopSize }
+  );
+
   return (
-    <span
-      className={
-        `
-          ${ styles[color] }
-          ${ styles[`m${ size }`] }
-          ${ styles[`t${ size }`] }
-          ${ styles[`d${ size }`] }
-        `
-      }
+    <As
+      className={ classes }
     >
       { children }
-    </span>
+    </As>
   );
 }

@@ -3,7 +3,7 @@ import styles from './menu.css';
 import { MenuIcon } from '../../../Icons';
 import { Dropdown } from '../../../Dropdown';
 import { MenuItemsList } from './MenuItemsList';
-import { EColors, Text } from '../../../Text';
+import { EColor, Text } from '../../../Text';
 
 export function Menu() {
   return (
@@ -18,7 +18,7 @@ export function Menu() {
       <div className={ styles.dropdown }> 
         <MenuItemsList postId="123"></MenuItemsList>
         <button className={ styles.closeButton }>
-          <Text size={ 12 } color={ EColors.grey66 }>Close</Text>
+          <Text size={ 12 } color={ EColor.grey66 }>Close</Text>
         </button>
       </div>
     </Dropdown>
