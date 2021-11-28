@@ -5,6 +5,7 @@ import './main.global.css';
 import { Header } from './shared/Header';
 import { Content } from './shared/Content';
 import { CardsList, ICardsListProps } from './shared/cards-list';
+import { useToken } from './hooks/useToken';
 
 const cardsList: ICardsListProps = {
   list: [
@@ -44,9 +45,11 @@ const cardsList: ICardsListProps = {
 }
 
 function AppComponent() {
+  const [token] = useToken();
+
   return (
     <Layout>
-      <Header></Header>
+      <Header token={ token } />
       <Content>
         <CardsList list={ cardsList.list }></CardsList>
       </Content>
@@ -54,4 +57,4 @@ function AppComponent() {
   );
 }
 
-export const App = hot(AppComponent);
+export const App = hot(() => <AppComponent />);
