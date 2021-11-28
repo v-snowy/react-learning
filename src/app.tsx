@@ -6,6 +6,8 @@ import { Header } from './shared/Header';
 import { Content } from './shared/Content';
 import { CardsList, ICardsListProps } from './shared/cards-list';
 import { useToken } from './hooks/useToken';
+import { tokenContext } from './shared/context/tokenContext';
+import { UserContextProvider } from './shared/context/userContext';
 
 const cardsList: ICardsListProps = {
   list: [
@@ -48,12 +50,16 @@ function AppComponent() {
   const [token] = useToken();
 
   return (
-    <Layout>
-      <Header token={ token } />
-      <Content>
-        <CardsList list={ cardsList.list }></CardsList>
-      </Content>
-    </Layout>
+    <tokenContext.Provider value={ token }>
+      <UserContextProvider>
+        <Layout>
+          <Header />
+          <Content>
+            <CardsList list={ cardsList.list } />
+          </Content>
+        </Layout>
+      </UserContextProvider>
+    </tokenContext.Provider>
   );
 }
 
