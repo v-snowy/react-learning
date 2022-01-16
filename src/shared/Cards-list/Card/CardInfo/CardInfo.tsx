@@ -3,6 +3,7 @@ import { Title } from '../Title';
 import { UserLink } from '../UserLink';
 import styles from './cardinfo.css';
 
+
 interface ICardInfoProps {
   userName: string;
   avatarImgSrc: string;
