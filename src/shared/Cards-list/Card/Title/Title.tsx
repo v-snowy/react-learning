@@ -22,7 +22,7 @@ export function Title({ description }: ITitleProps) {
       </a>
 
       { isModalActive && (
-        <Post />
+        <Post onClose={ () => setIsModalActive(false) } />
       ) }
     </h2>
   );

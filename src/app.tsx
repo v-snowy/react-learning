@@ -1,13 +1,17 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
-import { Layout } from './shared/Layout';
-import './main.global.css';
-import { Header } from './shared/Header';
-import { Content } from './shared/Content';
-import { CardsList, ICardsListProps } from './shared/cards-list';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { useToken } from './hooks/useToken';
+import './main.global.css';
+import { CardsList, ICardsListProps } from './shared/cards-list';
+import { Content } from './shared/Content';
 import { tokenContext } from './shared/context/tokenContext';
 import { UserContextProvider } from './shared/context/userContext';
+import { Header } from './shared/Header';
+import { Layout } from './shared/Layout';
+import { rootReducer } from './shared/store/reducers';
 
 const cardsList: ICardsListProps = {
   list: [
@@ -46,20 +50,26 @@ const cardsList: ICardsListProps = {
   ]
 }
 
+export const store = createStore(rootReducer, composeWithDevTools());
+
 function AppComponent() {
   const [token] = useToken();
 
+  const TokenProvider = tokenContext.Provider;
+
   return (
-    <tokenContext.Provider value={ token }>
-      <UserContextProvider>
-        <Layout>
-          <Header />
-          <Content>
-            <CardsList list={ cardsList.list } />
-          </Content>
-        </Layout>
-      </UserContextProvider>
-    </tokenContext.Provider>
+    <Provider store={ store }>
+      <TokenProvider value={ token }>
+        <UserContextProvider>
+          <Layout>
+            <Header />
+            <Content>
+              <CardsList list={ cardsList.list } />
+            </Content>
+          </Layout>
+        </UserContextProvider>
+      </TokenProvider>
+    </Provider>
   );
 }
 
