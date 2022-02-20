@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { Action, applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { useToken } from './hooks/useToken';
+import thunk, { ThunkAction } from 'redux-thunk';
 import './main.global.css';
 import { CardsList, ICardsListProps } from './shared/cards-list';
 import { Content } from './shared/Content';
-import { tokenContext } from './shared/context/tokenContext';
 import { UserContextProvider } from './shared/context/userContext';
 import { Header } from './shared/Header';
 import { Layout } from './shared/Layout';
+import { setToken } from './shared/store/actions';
 import { rootReducer } from './shared/store/reducers';
+import { State } from './shared/store/state';
 
 const cardsList: ICardsListProps = {
   list: [
@@ -50,25 +51,38 @@ const cardsList: ICardsListProps = {
   ]
 }
 
-export const store = createStore(rootReducer, composeWithDevTools());
+const store = createStore(rootReducer, composeWithDevTools(
+  applyMiddleware(thunk)
+));
+
+// Test
+const timeout = (): ThunkAction<void, State, unknown, Action<string>> => (dispatch, getState) => {
+  dispatch({ type: 'START' });
+  setTimeout(() => {
+    dispatch({ type: 'FINISH' })
+  }, 1500)
+};
 
 function AppComponent() {
-  const [token] = useToken();
-
-  const TokenProvider = tokenContext.Provider;
-
+  useEffect(() => {
+    const token = localStorage.getItem('token') || window.__token__;
+    store.dispatch(setToken(token));
+    
+    if (token) {
+      localStorage.setItem('token', token);
+    }
+  }, []);
+  
   return (
     <Provider store={ store }>
-      <TokenProvider value={ token }>
-        <UserContextProvider>
-          <Layout>
-            <Header />
-            <Content>
-              <CardsList list={ cardsList.list } />
-            </Content>
-          </Layout>
-        </UserContextProvider>
-      </TokenProvider>
+      <UserContextProvider>
+        <Layout>
+          <Header />
+          <Content>
+            <CardsList list={ cardsList.list } />
+          </Content>
+        </Layout>
+      </UserContextProvider>
     </Provider>
   );
 }

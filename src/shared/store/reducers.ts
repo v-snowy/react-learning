@@ -9,6 +9,11 @@ export const rootReducer: Reducer<State> = (state = initialState, action) => {
         ...state,
         comment: action.comment
       };
+    case ActionTypeEnum.SET_TOKEN:
+      return {
+        ...state,
+        token: action.token
+      };
     default:
       return state;
   }
