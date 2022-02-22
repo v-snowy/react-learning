@@ -1,8 +1,12 @@
 import { Reducer } from 'redux';
 import { ActionTypeEnum } from './actions';
-import { initialState, State } from './state';
+import { MeRequestFailedType, MeRequestSuccessType, MeRequestType, SetTokenType, UpdateCommentType } from './models';
+import { initialState, MeState, RootState } from './state';
 
-export const rootReducer: Reducer<State> = (state = initialState, action) => {
+type ActionType = UpdateCommentType | SetTokenType | MeActionType;
+type MeActionType = MeRequestType | MeRequestSuccessType | MeRequestFailedType;
+
+export const rootReducer: Reducer<RootState, ActionType> = (state: RootState = initialState, action: ActionType) => {
   switch (action.type) {
     case ActionTypeEnum.UPDATE_COMMENT:
       return {
@@ -13,6 +17,38 @@ export const rootReducer: Reducer<State> = (state = initialState, action) => {
       return {
         ...state,
         token: action.token
+      };
+    case ActionTypeEnum.ME_REQUEST:
+    case ActionTypeEnum.ME_REQUEST_SUCCESS:
+    case ActionTypeEnum.ME_REQUEST_FAILED:
+      return {
+        ...state,
+        me: meReducer(state.me, action)
+      };
+    default:
+      return state;
+  }
+};
+
+export const meReducer: Reducer<MeState, MeActionType> = (state: MeState = initialState.me, action: MeActionType) => {
+  switch (action.type) {
+    case ActionTypeEnum.ME_REQUEST:
+      return {
+        ...state,
+        loading: true
+      };
+    case ActionTypeEnum.ME_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        data: action.data
+      };
+    case ActionTypeEnum.ME_REQUEST_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: action.error
       };
     default:
       return state;

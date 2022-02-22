@@ -1,18 +1,16 @@
 import React, { useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { Provider } from 'react-redux';
-import { Action, applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk, { ThunkAction } from 'redux-thunk';
+import thunk from 'redux-thunk';
 import './main.global.css';
 import { CardsList, ICardsListProps } from './shared/cards-list';
 import { Content } from './shared/Content';
-import { UserContextProvider } from './shared/context/userContext';
 import { Header } from './shared/Header';
 import { Layout } from './shared/Layout';
 import { setToken } from './shared/store/actions';
 import { rootReducer } from './shared/store/reducers';
-import { State } from './shared/store/state';
 
 const cardsList: ICardsListProps = {
   list: [
@@ -55,17 +53,9 @@ const store = createStore(rootReducer, composeWithDevTools(
   applyMiddleware(thunk)
 ));
 
-// Test
-const timeout = (): ThunkAction<void, State, unknown, Action<string>> => (dispatch, getState) => {
-  dispatch({ type: 'START' });
-  setTimeout(() => {
-    dispatch({ type: 'FINISH' })
-  }, 1500)
-};
-
 function AppComponent() {
   useEffect(() => {
-    const token = localStorage.getItem('token') || window.__token__;
+    const token: string = localStorage.getItem('token') || window.__token__;
     store.dispatch(setToken(token));
     
     if (token) {
@@ -75,14 +65,12 @@ function AppComponent() {
   
   return (
     <Provider store={ store }>
-      <UserContextProvider>
-        <Layout>
-          <Header />
-          <Content>
-            <CardsList list={ cardsList.list } />
-          </Content>
-        </Layout>
-      </UserContextProvider>
+      <Layout>
+        <Header />
+        <Content>
+          <CardsList list={ cardsList.list } />
+        </Content>
+      </Layout>
     </Provider>
   );
 }

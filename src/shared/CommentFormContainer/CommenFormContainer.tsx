@@ -2,10 +2,10 @@ import React, { ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommentForm } from '../CommentForm';
 import { updateComment } from '../store/actions';
-import { State } from '../store/state';
+import { RootState } from '../store/state';
 
 export function CommentFormContainer() {
-  const comment: string = useSelector<State, string>(({ comment }: State) => comment);
+  const comment: string = useSelector<RootState, string>(({ comment }: RootState) => comment);
   const dispatch = useDispatch();
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {

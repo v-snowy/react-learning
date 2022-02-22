@@ -1,15 +1,16 @@
 import React from 'react';
-import styles from './userblock.css';
 import { Break } from '../../../Break';
-import { EColor, Text } from '../../../Text';
 import { IconAnon } from '../../../Icons';
+import { EColor, Text } from '../../../Text';
+import styles from './userblock.css';
 
 interface IUserBlockProps {
   avatarSrc?: string;
   username?: string;
+  loading: boolean;
 }
 
-export function UserBlock({ avatarSrc, username }: IUserBlockProps) {
+export function UserBlock({ avatarSrc, username, loading }: IUserBlockProps) {
   return (
     <a
       className={ styles.userBox }
@@ -25,7 +26,15 @@ export function UserBlock({ avatarSrc, username }: IUserBlockProps) {
 
       <div className={ styles.username }>
         <Break size={ 12 }/>
-        <Text size={ 20 } color={ username ? EColor.black : EColor.grey99 }>{ username || 'Anonymous' }</Text>
+        {
+          loading
+            ? (
+              <Text size={ 20 } color={ EColor.grey99 }>Loading...</Text>
+            )
+            : (
+              <Text size={ 20 } color={ username ? EColor.black : EColor.grey99 }>{ username || 'Anonymous' }</Text>
+            )
+        }
       </div>
     </a>
   );

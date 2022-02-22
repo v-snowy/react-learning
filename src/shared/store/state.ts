@@ -1,9 +1,23 @@
-export interface State {
+import { IUserData } from './models';
+
+export interface RootState {
   comment: string;
   token: string;
+  me: MeState;
 }
 
-export const initialState: State = {
+export interface MeState {
+  loading: boolean;
+  data: IUserData;
+  error: Error | null;
+}
+
+export const initialState: RootState = {
   comment: '',
-  token: ''
+  token: '',
+  me: {
+    loading: false,
+    data: {},
+    error: null
+  }
 };
