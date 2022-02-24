@@ -8,7 +8,7 @@ interface IPost {
 }
 
 export function Post({ onClose }: IPost) {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref: React.RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClick(event: MouseEvent) {
