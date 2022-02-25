@@ -21,7 +21,7 @@ export function CardsList() {
 
       try {
         const { data: { data: { after, children } } } = await axios.get(
-          'https://oauth.reddit.com/hot/', 
+          'https://oauth.reddit.com/new/', 
           {
             headers: { Authorization: `bearer ${ token }` },
             params: {
@@ -68,9 +68,9 @@ export function CardsList() {
       }
 
       {
-        posts.map(({ data }: any) => (
+        posts.map(({ data }: any, index: number) => (
           <Card
-            key={ data.id }
+            key={ data.id + index }
             title={ data.title }
             author={ data.author }
             thumbnail={ data.thumbnail }

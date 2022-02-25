@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
+import { useHistory } from 'react-router-dom';
 import { CommentFormContainer } from '../CommentFormContainer';
 import styles from './post.css';
 
@@ -9,6 +10,7 @@ interface IPost {
 
 export function Post({ onClose }: IPost) {
   const ref: React.RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+  const history = useHistory();
 
   useEffect(() => {
     function handleClick(event: MouseEvent) {
@@ -17,7 +19,9 @@ export function Post({ onClose }: IPost) {
         event.target instanceof Node &&
         !ref.current?.contains(event.target)
       ) {
-        onClose?.()
+        // Changed after adding routing for modal
+        // onClose?.()
+        history.push('/');
       }
     }
 

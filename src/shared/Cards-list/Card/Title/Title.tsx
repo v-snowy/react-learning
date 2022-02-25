@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Post } from '../../../Post';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './title.css';
 
 interface ITitleProps {
@@ -7,23 +7,16 @@ interface ITitleProps {
 }
 
 export function Title({ description }: ITitleProps) {
-  const [isModalActive, setIsModalActive] = useState(false);
-
   return (
     <h2 className={ styles.title }>
-      <a
+      <Link
         className={ styles.postLink }
-        href="#post-url"
-        onClick={ () => setIsModalActive(true) }
+        to="/posts/1"
       >
         <div className={ styles.textContent }>
           { description }
         </div>
-      </a>
-
-      { isModalActive && (
-        <Post onClose={ () => setIsModalActive(false) } />
-      ) }
+      </Link>
     </h2>
   );
 }
