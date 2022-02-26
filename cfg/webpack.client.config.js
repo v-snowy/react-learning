@@ -17,12 +17,22 @@ function setupDevtool() {
   }
 }
 
+function getEntry() {
+  if (IS_DEV) {
+    return [
+      path.resolve(__dirname, '../src/client/index.jsx'),
+      'webpack-hot-middleware/client?path=http://localhost:3001/static/__webpack_hmr'
+    ];
+  }
+
+  return [
+    path.resolve(__dirname, '../src/client/index.jsx')
+  ];
+}
+
 module.exports = {
   mode: NODE_ENV || 'development',
-  entry: [
-    path.resolve(__dirname, '../src/client/index.jsx'),
-    'webpack-hot-middleware/client?path=http://localhost:3001/static/__webpack_hmr'
-  ],
+  entry: getEntry(),
   output: {
     path: path.resolve(__dirname, '../dist/client'),
     filename: 'client.js',
